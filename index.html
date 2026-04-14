@@ -3,99 +3,219 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Figma Token Handover Preview</title>
+  <title>HR App Design Token Handover</title>
   <style>
     :root { color-scheme: light dark; }
-    body { font-family: Inter, Arial, sans-serif; margin: 24px; line-height: 1.4; }
-    h1 { margin: 0 0 6px; }
-    .meta { color: #666; margin-bottom: 20px; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
-    .card { border: 1px solid #ddd; border-radius: 10px; padding: 12px; background: color-mix(in srgb, canvas 96%, #fff 4%); }
-    .card h2 { margin: 0 0 8px; font-size: 16px; }
-    .count { font-size: 12px; color: #666; margin-bottom: 10px; }
-    ul { margin: 0; padding-left: 18px; max-height: 420px; overflow: auto; }
-    li { margin: 3px 0; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; }
-    .error { color: #b00020; font-weight: 600; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Inter, Arial, sans-serif; }
+    .layout { display: grid; grid-template-columns: 280px 1fr; min-height: 100vh; }
+    .sidebar { border-right: 1px solid #ddd; padding: 16px; position: sticky; top: 0; max-height: 100vh; overflow: auto; }
+    .sidebar h1 { font-size: 16px; margin: 0 0 6px; }
+    .sidebar p { font-size: 12px; color: #666; margin: 0 0 12px; }
+    .nav { display: grid; gap: 6px; }
+    .nav button { text-align: left; border: 1px solid #ddd; background: transparent; border-radius: 8px; padding: 8px; cursor: pointer; }
+    .nav button.active { border-color: #ed1c24; background: rgba(237,28,36,.08); }
+    .main { padding: 20px; }
+    .page-header { margin-bottom: 12px; }
+    .page-header h2 { margin: 0; }
+    .meta { font-size: 12px; color: #666; }
+    .refs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .chip { font-size: 11px; border: 1px solid #ddd; border-radius: 999px; padding: 3px 8px; }
+    .section { margin-top: 16px; border: 1px solid #ddd; border-radius: 10px; overflow: hidden; }
+    .section h3 { margin: 0; padding: 10px 12px; border-bottom: 1px solid #ddd; font-size: 14px; }
+    .row { display: grid; grid-template-columns: minmax(260px, 1.6fr) minmax(160px, 1fr) 120px; gap: 12px; align-items: center; padding: 10px 12px; border-top: 1px solid #eee; }
+    .row:first-of-type { border-top: 0; }
+    .token { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; }
+    .value { font-size: 12px; color: #666; }
+    .sample { height: 28px; border-radius: 6px; border: 1px solid #ccc; background: #f3f3f3; display: flex; align-items: center; justify-content: center; font-size: 11px; }
+    .sample.text { border: 0; background: transparent; justify-content: flex-start; }
+    @media (max-width: 980px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { position: static; max-height: none; border-right: 0; border-bottom: 1px solid #ddd; }
+      .row { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
-  <h1>Figma Dev Handover: New Token Names</h1>
-  <div class="meta">Grouped HTML preview generated from <code>figma-dev-handover-new-tokens.md</code></div>
-  <div id="status" class="meta">Loading token list...</div>
-  <div id="root" class="grid"></div>
+  <div class="layout">
+    <aside class="sidebar">
+      <h1>DS Handover Navigator</h1>
+      <p>Grouped by Figma design-system pages</p>
+      <div id="nav" class="nav"></div>
+    </aside>
+    <main class="main">
+      <section class="page-header">
+        <h2 id="pageTitle"></h2>
+        <div id="pageMeta" class="meta"></div>
+        <div id="pageRefs" class="refs"></div>
+      </section>
+      <div id="content"></div>
+    </main>
+  </div>
 
   <script>
-    const groups = {
-      "Color / Background": [],
-      "Color / Border": [],
-      "Color / Icon": [],
-      "Color / Text": [],
-      "Color / Misc": [],
-      "Size / Space": [],
-      "Size / Radius": [],
-      "Size / Stroke": [],
-      "Typography / Family": [],
-      "Typography / Scale": [],
-      "Typography / Weight": [],
-      "Effects": [],
-      "Other": []
+    const TOKEN_VALUES = {
+      "var(--sds-size-space-0)": 0, "var(--sds-size-space-50)": 2, "var(--sds-size-space-100)": 4, "var(--sds-size-space-150)": 6,
+      "var(--sds-size-space-200)": 8, "var(--sds-size-space-300)": 12, "var(--sds-size-space-400)": 16, "var(--sds-size-space-500)": 20,
+      "var(--sds-size-space-600)": 24, "var(--sds-size-space-800)": 32, "var(--sds-size-space-1200)": 48, "var(--sds-size-space-1600)": 64,
+      "var(--sds-size-space-2400)": 96, "var(--sds-size-space-4000)": 160, "var(--sds-size-space-negative-50)": -1, "var(--sds-size-space-negative-100)": -4,
+      "var(--sds-size-space-negative-200)": -8, "var(--sds-size-space-negative-300)": -12, "var(--sds-size-space-negative-400)": -16,
+      "var(--sds-size-space-negative-500)": -20, "var(--sds-size-space-negative-600)": -24, "var(--sds-size-radius-50)": 0, "var(--sds-size-radius-100)": 4,
+      "var(--sds-size-radius-200)": 8, "var(--sds-size-radius-300)": 12, "var(--sds-size-radius-400)": 16, "var(--sds-size-radius-600)": 20,
+      "var(--sds-size-radius-full)": 9999, "var(--sds-size-stroke-border)": 1, "var(--sds-size-stroke-focus-ring)": 2, "var(--sds-size-stroke-icon-border)": 1.5,
+      "var(--sds-typography-scale-8)": 8, "var(--sds-typography-scale-10)": 10, "var(--sds-typography-scale-11)": 11, "var(--sds-typography-scale-02)": 12,
+      "var(--sds-typography-scale-13)": 13, "var(--sds-typography-scale-025)": 14, "var(--sds-typography-scale-03)": 16, "var(--sds-typography-scale-18)": 18,
+      "var(--sds-typography-scale-20)": 20, "var(--sds-typography-scale-05)": 24, "var(--sds-typography-scale-30)": 30, "var(--sds-typography-family-serif)": "Rubik",
+      "var(--sds-typography-weight-light)": "Light", "var(--sds-typography-weight-regular)": "Regular", "var(--sds-typography-weight-medium)": "Medium",
+      "var(--sds-typography-weight-semibold)": "SemiBold", "var(--sds-effect-blur-100)": 4,
+      "var(--sds-color-background-utilities-blanket)": "rgba(0, 0, 0, 0.7)", "var(--sds-color-background-utilities-overlay)": "rgba(0, 0, 0, 0.5)",
+      "var(--sds-color-background-utilities-scrim)": "rgba(255, 255, 255, 0.8)", "var(--sds-color-border-utilities-swatch)": "rgba(0, 0, 0, 0.1)",
+      "var(--sds-color-black-100)": "rgba(44, 44, 46, 0.05)", "var(--sds-color-black-200)": "rgba(44, 44, 46, 0.1)",
+      "var(--sds-color-black-300)": "rgba(44, 44, 46, 0.2)", "var(--sds-color-black-400)": "rgba(44, 44, 46, 0.4)"
     };
 
-    function groupToken(t) {
-      if (t.includes("--sds-color-background-")) return "Color / Background";
-      if (t.includes("--sds-color-border-")) return "Color / Border";
-      if (t.includes("--sds-color-icon-")) return "Color / Icon";
-      if (t.includes("--sds-color-text-")) return "Color / Text";
-      if (t.includes("--sds-color-")) return "Color / Misc";
-      if (t.includes("--sds-size-space-")) return "Size / Space";
-      if (t.includes("--sds-size-radius-")) return "Size / Radius";
-      if (t.includes("--sds-size-stroke-")) return "Size / Stroke";
-      if (t.includes("--sds-typography-family-")) return "Typography / Family";
-      if (t.includes("--sds-typography-scale-")) return "Typography / Scale";
-      if (t.includes("--sds-typography-weight-")) return "Typography / Weight";
-      if (t.includes("--sds-effect-")) return "Effects";
+    const PAGE_CONFIG = [
+      { name: "Cover", refs: [] },
+      { name: "Foundations", refs: ["Core Tokens"] },
+      { name: "Icons", refs: ["language", "Key", "Theme", "Call", "Email"] },
+      { name: "Components", refs: ["Headers", "Sub Header", "Sub Header Tabs"] },
+      { name: "Forms", refs: ["Profile Update Form", "Marital Status", "Address", "Skills"] },
+      { name: "Avatars", refs: ["Emp Details", "Arrow", "Checkbox", "Left Icon"] },
+      { name: "Buttons", refs: ["Button", "Icon Button", "Button Group"] },
+      { name: "Dialog, Popup & Models", refs: ["Status Symbols", "Popup", "Approval Flow"] },
+      { name: "Inputs", refs: ["Radio Field", "Checked/Unchecked", "Default/Filled"] },
+      { name: "Bottom Popups", refs: ["Footer Line", "Attendance More", "Leave Approval"] },
+      { name: "Navigation", refs: ["Footer-v", "Home", "Leaves", "Team", "Menu"] },
+      { name: "Banners", refs: ["Home Swiper", "Slide 1-4"] },
+      { name: "Tabs", refs: ["Tab", "ButtonTab", "Active States"] },
+      { name: "Tags, Chips & Badge", refs: ["Tag", "Chip", "Badge"] },
+      { name: "Tooltip & Toasts", refs: ["Tooltip", "Toast Message"] },
+      { name: "Telecom Components", refs: ["Status Pill", "Section Header Row", "Quick Action Item"] }
+    ];
+
+    function category(token) {
+      if (token.includes("--sds-color-background-")) return "Color / Background";
+      if (token.includes("--sds-color-border-")) return "Color / Border";
+      if (token.includes("--sds-color-icon-")) return "Color / Icon";
+      if (token.includes("--sds-color-text-")) return "Color / Text";
+      if (token.includes("--sds-color-")) return "Color / Misc";
+      if (token.includes("--sds-size-space-")) return "Size / Space";
+      if (token.includes("--sds-size-radius-")) return "Size / Radius";
+      if (token.includes("--sds-size-stroke-")) return "Size / Stroke";
+      if (token.includes("--sds-typography-family-")) return "Typography / Family";
+      if (token.includes("--sds-typography-scale-")) return "Typography / Scale";
+      if (token.includes("--sds-typography-weight-")) return "Typography / Weight";
+      if (token.includes("--sds-effect-")) return "Effects";
       return "Other";
     }
 
-    function render(tokens) {
-      Object.keys(groups).forEach(k => groups[k] = []);
-      tokens.forEach(t => groups[groupToken(t)].push(t));
+    function inferColor(token) {
+      const value = TOKEN_VALUES[token];
+      if (typeof value === "string" && value.startsWith("rgb")) return value;
+      let h = 0;
+      for (let i = 0; i < token.length; i += 1) h = token.charCodeAt(i) + ((h << 5) - h);
+      return `hsl(${Math.abs(h) % 360} 65% 55%)`;
+    }
 
-      const root = document.getElementById("root");
-      root.innerHTML = "";
-      Object.entries(groups).forEach(([name, list]) => {
-        if (!list.length) return;
-        list.sort();
-        const card = document.createElement("section");
-        card.className = "card";
-        card.innerHTML = `<h2>${name}</h2><div class="count">${list.length} tokens</div>`;
-        const ul = document.createElement("ul");
-        list.forEach(token => {
-          const li = document.createElement("li");
-          li.textContent = token;
-          ul.appendChild(li);
-        });
-        card.appendChild(ul);
-        root.appendChild(card);
+    function sampleFor(token) {
+      const cat = category(token);
+      const value = TOKEN_VALUES[token];
+      const box = document.createElement("div");
+      box.className = "sample";
+      if (cat.startsWith("Color")) {
+        box.style.background = inferColor(token);
+        box.textContent = "";
+      } else if (cat === "Size / Space") {
+        const px = typeof value === "number" ? Math.max(Math.abs(value), 2) : 8;
+        box.innerHTML = `<div style="height:10px;width:${Math.min(px*6,100)}px;background:#ed1c24;border-radius:3px"></div>`;
+      } else if (cat === "Size / Radius") {
+        const r = typeof value === "number" ? Math.min(value, 20) : 6;
+        box.innerHTML = `<div style="width:70px;height:20px;background:#2c2c2e;border-radius:${r}px"></div>`;
+      } else if (cat.startsWith("Typography")) {
+        box.className = "sample text";
+        const size = token.includes("scale-") && typeof value === "number" ? value : 13;
+        box.innerHTML = `<span style="font-size:${Math.max(10, Math.min(size, 24))}px">Aa</span>`;
+      } else if (cat === "Effects") {
+        box.innerHTML = `<div style="width:70px;height:16px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.25)"></div>`;
+      } else {
+        box.textContent = "Preview";
+      }
+      return box;
+    }
+
+    function renderPage(name, tokens) {
+      document.getElementById("pageTitle").textContent = name;
+      document.getElementById("pageMeta").textContent = `${tokens.length} tokens mapped to this section`;
+      const refs = PAGE_CONFIG.find(p => p.name === name)?.refs || [];
+      const refsRoot = document.getElementById("pageRefs");
+      refsRoot.innerHTML = "";
+      refs.forEach(r => {
+        const el = document.createElement("span");
+        el.className = "chip";
+        el.textContent = r;
+        refsRoot.appendChild(el);
       });
-      document.getElementById("status").textContent = `Loaded ${tokens.length} tokens`;
+
+      const grouped = {};
+      tokens.forEach(t => {
+        const c = category(t);
+        if (!grouped[c]) grouped[c] = [];
+        grouped[c].push(t);
+      });
+
+      const content = document.getElementById("content");
+      content.innerHTML = "";
+      Object.entries(grouped).forEach(([cat, list]) => {
+        const sec = document.createElement("section");
+        sec.className = "section";
+        sec.innerHTML = `<h3>${cat} (${list.length})</h3>`;
+        list.sort().forEach(token => {
+          const row = document.createElement("div");
+          row.className = "row";
+          const val = TOKEN_VALUES[token] !== undefined ? String(TOKEN_VALUES[token]) : "alias";
+          row.innerHTML = `<div class="token">${token}</div><div class="value">${val}</div>`;
+          row.appendChild(sampleFor(token));
+          sec.appendChild(row);
+        });
+        content.appendChild(sec);
+      });
     }
 
     fetch("./figma-dev-handover-new-tokens.md")
       .then(r => r.text())
       .then(md => {
-        const normalized = md.replace(/\u0000/g, "");
-        const tokens = normalized
+        const tokens = md.replace(/\u0000/g, "")
           .split(/\r?\n/)
           .map(line => line.trim())
           .filter(line => line.startsWith("- `var(--sds-"))
           .map(line => line.replace(/^- `|`$/g, ""));
-        render(tokens);
-      })
-      .catch(() => {
-        const status = document.getElementById("status");
-        status.className = "meta error";
-        status.textContent = "Failed to load token markdown file.";
+
+        const nav = document.getElementById("nav");
+        PAGE_CONFIG.forEach((page, idx) => {
+          const btn = document.createElement("button");
+          btn.textContent = page.name;
+          const pageTokens = tokens.filter(t => {
+            if (page.name === "Foundations") return true;
+            if (page.name === "Telecom Components") return t.includes("typography") || t.includes("space") || t.includes("radius");
+            if (page.name === "Buttons") return t.includes("background") || t.includes("border") || t.includes("text") || t.includes("icon") || t.includes("size") || t.includes("typography");
+            if (page.name === "Icons") return t.includes("icon") || t.includes("size") || t.includes("typography") || t.includes("background");
+            if (page.name === "Banners") return t.includes("background") || t.includes("text") || t.includes("typography");
+            if (page.name === "Navigation") return t.includes("text") || t.includes("icon") || t.includes("space") || t.includes("background");
+            return t.includes("background") || t.includes("border") || t.includes("text") || t.includes("icon") || t.includes("size") || t.includes("typography");
+          });
+          btn.addEventListener("click", () => {
+            document.querySelectorAll(".nav button").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            renderPage(page.name, pageTokens);
+            location.hash = encodeURIComponent(page.name);
+          });
+          if (idx === 0) btn.classList.add("active");
+          nav.appendChild(btn);
+        });
+
+        const initial = decodeURIComponent((location.hash || "").replace(/^#/, "")) || PAGE_CONFIG[0].name;
+        const target = Array.from(nav.querySelectorAll("button")).find(b => b.textContent === initial) || nav.querySelector("button");
+        target.click();
       });
   </script>
 </body>
