@@ -84,7 +84,8 @@
     fetch("./figma-dev-handover-new-tokens.md")
       .then(r => r.text())
       .then(md => {
-        const tokens = md
+        const normalized = md.replace(/\u0000/g, "");
+        const tokens = normalized
           .split(/\r?\n/)
           .map(line => line.trim())
           .filter(line => line.startsWith("- `var(--sds-"))
