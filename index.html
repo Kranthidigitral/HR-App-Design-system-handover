@@ -74,23 +74,24 @@
       "var(--sds-color-black-300)": "rgba(44, 44, 46, 0.2)", "var(--sds-color-black-400)": "rgba(44, 44, 46, 0.4)"
     };
 
+    const TOKEN_LIST = ["var(--sds-color-background-brand-click)","var(--sds-color-background-brand-default)","var(--sds-color-background-brand-secondary)","var(--sds-color-background-brand-secondary-hover)","var(--sds-color-background-brand-tertiary)","var(--sds-color-background-brand-tertiary-hover)","var(--sds-color-background-danger-default)","var(--sds-color-background-danger-hover)","var(--sds-color-background-danger-secondary-hover)","var(--sds-color-background-disabled-default)","var(--sds-color-background-pink-default)","var(--sds-color-background-pink-secondary)","var(--sds-color-background-pink-secondary-click)","var(--sds-color-background-pink-tertiary)","var(--sds-color-background-pink-tertiary-click)","var(--sds-color-background-positive-click)","var(--sds-color-background-positive-default)","var(--sds-color-background-positive-secondary)","var(--sds-color-background-positive-secondary-click)","var(--sds-color-background-positive-tertiary)","var(--sds-color-background-positive-tertiary-click)","var(--sds-color-background-primary-secondary)","var(--sds-color-background-primary-tertiary)","var(--sds-color-background-primary-tertiary-click)","var(--sds-color-background-utilities-blanket)","var(--sds-color-background-utilities-overlay)","var(--sds-color-background-utilities-scrim)","var(--sds-color-background-utilities-white-bg)","var(--sds-color-background-utilities-white-bg-2)","var(--sds-color-background-warning-click)","var(--sds-color-background-warning-default)","var(--sds-color-background-warning-secondary)","var(--sds-color-background-warning-secondary-click)","var(--sds-color-background-warning-tertiary)","var(--sds-color-background-warning-tertiary-click)","var(--sds-color-black-100)","var(--sds-color-black-200)","var(--sds-color-black-300)","var(--sds-color-black-400)","var(--sds-color-border-brand-default)","var(--sds-color-border-brand-secondary)","var(--sds-color-border-brand-tertiary)","var(--sds-color-border-disabled-default)","var(--sds-color-border-positive-default)","var(--sds-color-border-positive-secondary)","var(--sds-color-border-positive-tertiary)","var(--sds-color-border-primary-default)","var(--sds-color-border-primary-secondary)","var(--sds-color-border-primary-tertiary)","var(--sds-color-border-utilities-swatch)","var(--sds-color-border-warning-default)","var(--sds-color-border-warning-secondary)","var(--sds-color-border-warning-tertiary)","var(--sds-color-icon-brand-default)","var(--sds-color-icon-brand-on-brand)","var(--sds-color-icon-brand-on-brand-secondary)","var(--sds-color-icon-brand-on-brand-tertiary)","var(--sds-color-icon-brand-secondary)","var(--sds-color-icon-brand-tertiary)","var(--sds-color-icon-disabled-default)","var(--sds-color-icon-disabled-on-disabled)","var(--sds-color-icon-positive-default)","var(--sds-color-icon-positive-on-positive)","var(--sds-color-icon-positive-on-positive-secondary)","var(--sds-color-icon-positive-on-positive-tertiary)","var(--sds-color-icon-positive-secondary)","var(--sds-color-icon-positive-tertiary)","var(--sds-color-icon-primary-default)","var(--sds-color-icon-primary-on-danger)","var(--sds-color-icon-primary-on-danger-secondary)","var(--sds-color-icon-primary-on-danger-tertiary)","var(--sds-color-icon-primary-secondary)","var(--sds-color-icon-primary-tertiary)","var(--sds-color-icon-utilities-default)","var(--sds-color-icon-utilities-red-on-overlay)","var(--sds-color-icon-warning-default)","var(--sds-color-icon-warning-on-warning)","var(--sds-color-icon-warning-on-warning-secondary)","var(--sds-color-icon-warning-on-warning-tertiary)","var(--sds-color-icon-warning-secondary)","var(--sds-color-icon-warning-tertiary)","var(--sds-color-text-brand-default)","var(--sds-color-text-brand-on-brand)","var(--sds-color-text-brand-on-brand-secondary)","var(--sds-color-text-brand-on-brand-tertiary)","var(--sds-color-text-brand-secondary)","var(--sds-color-text-brand-tertiary)","var(--sds-color-text-danger-tertiary)","var(--sds-color-text-disabled-default)","var(--sds-color-text-disabled-on-disabled)","var(--sds-color-text-pink-default)","var(--sds-color-text-pink-tertiary)","var(--sds-color-text-positive-default)","var(--sds-color-text-positive-on-positive)","var(--sds-color-text-positive-on-positive-secondary)","var(--sds-color-text-positive-on-positive-tertiary)","var(--sds-color-text-positive-secondary)","var(--sds-color-text-positive-tertiary)","var(--sds-color-text-primary-default)","var(--sds-color-text-primary-on-primary)","var(--sds-color-text-primary-on-primary-secondary)","var(--sds-color-text-primary-on-primary-tertiary)","var(--sds-color-text-primary-secondary)","var(--sds-color-text-utilities-red-on-overlay)","var(--sds-color-text-utilities-text-on-overlay)","var(--sds-color-text-utilities-text-on-overlay-1)","var(--sds-color-text-utilities-white-on-overlay)","var(--sds-color-text-warning-default)","var(--sds-color-text-warning-on-warning)","var(--sds-color-text-warning-on-warning-secondary)","var(--sds-color-text-warning-on-warning-tertiary)","var(--sds-color-text-warning-secondary)","var(--sds-color-text-warning-tertiary)","var(--sds-effect-blur-100)","var(--sds-size-radius-100)","var(--sds-size-radius-200)","var(--sds-size-radius-300)","var(--sds-size-radius-400)","var(--sds-size-radius-50)","var(--sds-size-radius-600)","var(--sds-size-radius-full)","var(--sds-size-space-0)","var(--sds-size-space-100)","var(--sds-size-space-1200)","var(--sds-size-space-150)","var(--sds-size-space-1600)","var(--sds-size-space-200)","var(--sds-size-space-2400)","var(--sds-size-space-300)","var(--sds-size-space-400)","var(--sds-size-space-4000)","var(--sds-size-space-50)","var(--sds-size-space-500)","var(--sds-size-space-600)","var(--sds-size-space-800)","var(--sds-size-space-negative-100)","var(--sds-size-space-negative-200)","var(--sds-size-space-negative-300)","var(--sds-size-space-negative-400)","var(--sds-size-space-negative-50)","var(--sds-size-space-negative-500)","var(--sds-size-space-negative-600)","var(--sds-size-stroke-border)","var(--sds-size-stroke-focus-ring)","var(--sds-size-stroke-icon-border)","var(--sds-typography-family-serif)","var(--sds-typography-scale-02)","var(--sds-typography-scale-025)","var(--sds-typography-scale-03)","var(--sds-typography-scale-05)","var(--sds-typography-scale-10)","var(--sds-typography-scale-11)","var(--sds-typography-scale-13)","var(--sds-typography-scale-18)","var(--sds-typography-scale-20)","var(--sds-typography-scale-30)","var(--sds-typography-scale-8)","var(--sds-typography-weight-light)","var(--sds-typography-weight-medium)","var(--sds-typography-weight-regular)","var(--sds-typography-weight-semibold)"];
     const PAGE_CONFIG = [
-      { name: "Cover", refs: [] },
-      { name: "Foundations", refs: ["Core Tokens"] },
-      { name: "Icons", refs: ["language", "Key", "Theme", "Call", "Email"] },
-      { name: "Components", refs: ["Headers", "Sub Header", "Sub Header Tabs"] },
-      { name: "Forms", refs: ["Profile Update Form", "Marital Status", "Address", "Skills"] },
-      { name: "Avatars", refs: ["Emp Details", "Arrow", "Checkbox", "Left Icon"] },
-      { name: "Buttons", refs: ["Button", "Icon Button", "Button Group"] },
-      { name: "Dialog, Popup & Models", refs: ["Status Symbols", "Popup", "Approval Flow"] },
-      { name: "Inputs", refs: ["Radio Field", "Checked/Unchecked", "Default/Filled"] },
-      { name: "Bottom Popups", refs: ["Footer Line", "Attendance More", "Leave Approval"] },
-      { name: "Navigation", refs: ["Footer-v", "Home", "Leaves", "Team", "Menu"] },
-      { name: "Banners", refs: ["Home Swiper", "Slide 1-4"] },
-      { name: "Tabs", refs: ["Tab", "ButtonTab", "Active States"] },
-      { name: "Tags, Chips & Badge", refs: ["Tag", "Chip", "Badge"] },
-      { name: "Tooltip & Toasts", refs: ["Tooltip", "Toast Message"] },
-      { name: "Telecom Components", refs: ["Status Pill", "Section Header Row", "Quick Action Item"] }
+      { pageId: "3:5", name: "Cover", tokenIdx: [1,6,62,93,103], refs: [] },
+      { pageId: "9762:187", name: "Foundations", tokenIdx: [0,1,2,3,6,7,8,9,15,16,17,18,19,20,21,22,23,24,25,26,29,30,31,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,59,61,62,63,64,65,66,67,68,69,70,71,72,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,92,93,94,95,96,97,98,99,100,101,102,107,108,109,110,111,112,113,115,117,118,120,122,125,126,127,128,129,130,133,134,136,137,138,139,141,142], refs: ["Core Tokens"] },
+      { pageId: "7809:18809", name: "Icons", tokenIdx: [3,4,6,25,27,49,53,74,81,115,120,124,128,134,144,145,146,148,158], refs: ["language", "Key", "Theme", "Call", "Email"] },
+      { pageId: "348:13000", name: "Components", tokenIdx: [1,2,3,4,5,6,7,8,9,10,11,13,14,15,16,17,18,19,20,21,22,23,24,26,27,30,31,32,33,34,36,37,38,39,41,45,48,49,52,53,54,57,58,59,65,68,72,74,79,80,81,82,83,85,86,87,88,89,90,91,92,96,97,102,103,104,105,106,111,112,114,115,116,117,118,120,121,122,123,124,126,128,129,131,132,133,134,135,136,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160], refs: ["Headers", "Sub Header", "Sub Header Tabs"] },
+      { pageId: "370:5433", name: "Forms", tokenIdx: [3,4,6,11,18,21,27,32,36,37,39,41,47,48,49,52,53,57,58,59,71,72,81,85,86,87,88,90,92,102,105,111,112,114,115,116,117,118,120,121,122,124,126,128,129,131,136,139,142,144,145,146,147,148,149,150,151,152,154,157,158,159,160], refs: ["Profile Update Form", "Marital Status", "Address", "Skills"] },
+      { pageId: "128:10526", name: "Avatars", tokenIdx: [3,5,6,11,16,18,21,26,27,32,41,48,49,53,54,58,81,86,90,92,102,103,111,114,120,122,124,126,128,129,131,132,136,142,144,145,146,147,148,150,151,152,154,156,157,158,159,160], refs: ["Emp Details", "Arrow", "Checkbox", "Left Icon"] },
+      { pageId: "128:10284", name: "Buttons", tokenIdx: [1,2,3,4,5,6,7,8,9,27,28,39,42,49,53,54,60,81,82,83,87,89,103,115,118,120,121,122,126,128,129,132,142,145,146,147,148,149,158], refs: ["Button", "Icon Button", "Button Group"] },
+      { pageId: "128:10421", name: "Dialog, Popup & Models", tokenIdx: [3,5,6,16,18,21,27,29,37,39,45,48,49,52,53,54,57,58,59,62,68,71,72,81,83,85,86,88,92,102,103,112,114,115,116,118,119,120,121,122,124,126,128,129,131,132,133,135,136,142,144,145,146,147,148,149,150,151,152,154,157,158,159,160], refs: ["Status Symbols", "Popup", "Approval Flow"] },
+      { pageId: "128:10423", name: "Inputs", tokenIdx: [1,2,3,4,6,9,27,36,37,39,41,42,47,48,49,53,54,57,58,59,60,71,72,81,85,86,88,89,102,114,115,116,117,120,122,124,126,128,129,131,142,144,145,146,147,148,149,151,152,154,158,159,160], refs: ["Radio Field", "Checked/Unchecked", "Default/Filled"] },
+      { pageId: "87:18810", name: "Bottom Popups", tokenIdx: [2,3,4,5,6,9,16,18,21,26,27,39,48,49,52,53,54,57,58,59,60,72,81,83,85,86,87,88,89,92,102,103,105,112,114,115,116,118,120,121,122,123,124,126,128,129,131,132,133,134,135,136,137,142,144,145,146,147,148,149,150,151,152,153,154,156,157,158,159,160], refs: ["Footer Line", "Attendance More", "Leave Approval"] },
+      { pageId: "516:12822", name: "Navigation", tokenIdx: [2,6,27,36,39,49,53,58,72,73,86,106,120,124,126,128,129,132,141,142,145,146,148,158], refs: ["Footer-v", "Home", "Leaves", "Team", "Menu"] },
+      { pageId: "5540:262", name: "Banners", tokenIdx: [1,3,6,8,12,18,30,54,82,85,117,120,122,124,126,129,142,145,146,148,149,151,152,158,159,160], refs: ["Home Swiper", "Slide 1-4"] },
+      { pageId: "128:11109", name: "Tabs", tokenIdx: [2,3,6,48,49,81,85,87,103,115,118,120,122,124,126,128,129,142,143,145,147,154,158,159], refs: ["Tab", "ButtonTab", "Active States"] },
+      { pageId: "128:10523", name: "Tags, Chips & Badge", tokenIdx: [0,2,3,5,6,7,10,16,17,20,21,22,26,27,30,31,34,45,46,48,49,52,54,57,58,59,65,66,72,79,80,81,85,86,87,96,97,103,105,111,112,114,115,116,118,120,121,122,124,126,128,129,131,134,142,144,145,146,147,148,149,150,151,152,156,158,159,160], refs: ["Tag", "Chip", "Badge"] },
+      { pageId: "280:23459", name: "Tooltip & Toasts", tokenIdx: [1,2,4,6,17,21,27,29,31,36,39,41,44,47,51,53,54,62,66,68,81,92,98,111,115,120,121,122,126,128,129,142,145,146,148,151,152,158,159], refs: ["Tooltip", "Toast Message"] },
+      { pageId: "7091:2", name: "Telecom Components", tokenIdx: [145,146,147,148,149,150,153,154,158,159,160], refs: ["Status Pill", "Section Header Row", "Quick Action Item"] }
     ];
 
     function category(token) {
@@ -145,7 +146,9 @@
 
     function renderPage(name, tokens) {
       document.getElementById("pageTitle").textContent = name;
-      document.getElementById("pageMeta").textContent = `${tokens.length} tokens mapped to this section`;
+      const nodeIdForUrl = PAGE_CONFIG.find(p => p.name === name)?.pageId || "";
+      const nodeParam = nodeIdForUrl.replace(":", "-");
+      document.getElementById("pageMeta").innerHTML = `${tokens.length} tokens mapped to this section · <a href="https://www.figma.com/design/5n6UEqcMPdT2cx3pIURqGf/HR-App---DS--V1?node-id=${nodeParam}" target="_blank" rel="noreferrer">Open Figma section</a>`;
       const refs = PAGE_CONFIG.find(p => p.name === name)?.refs || [];
       const refsRoot = document.getElementById("pageRefs");
       refsRoot.innerHTML = "";
@@ -181,42 +184,24 @@
       });
     }
 
-    fetch("./figma-dev-handover-new-tokens.md")
-      .then(r => r.text())
-      .then(md => {
-        const tokens = md.replace(/\u0000/g, "")
-          .split(/\r?\n/)
-          .map(line => line.trim())
-          .filter(line => line.startsWith("- `var(--sds-"))
-          .map(line => line.replace(/^- `|`$/g, ""));
-
-        const nav = document.getElementById("nav");
-        PAGE_CONFIG.forEach((page, idx) => {
-          const btn = document.createElement("button");
-          btn.textContent = page.name;
-          const pageTokens = tokens.filter(t => {
-            if (page.name === "Foundations") return true;
-            if (page.name === "Telecom Components") return t.includes("typography") || t.includes("space") || t.includes("radius");
-            if (page.name === "Buttons") return t.includes("background") || t.includes("border") || t.includes("text") || t.includes("icon") || t.includes("size") || t.includes("typography");
-            if (page.name === "Icons") return t.includes("icon") || t.includes("size") || t.includes("typography") || t.includes("background");
-            if (page.name === "Banners") return t.includes("background") || t.includes("text") || t.includes("typography");
-            if (page.name === "Navigation") return t.includes("text") || t.includes("icon") || t.includes("space") || t.includes("background");
-            return t.includes("background") || t.includes("border") || t.includes("text") || t.includes("icon") || t.includes("size") || t.includes("typography");
-          });
-          btn.addEventListener("click", () => {
-            document.querySelectorAll(".nav button").forEach(b => b.classList.remove("active"));
-            btn.classList.add("active");
-            renderPage(page.name, pageTokens);
-            location.hash = encodeURIComponent(page.name);
-          });
-          if (idx === 0) btn.classList.add("active");
-          nav.appendChild(btn);
-        });
-
-        const initial = decodeURIComponent((location.hash || "").replace(/^#/, "")) || PAGE_CONFIG[0].name;
-        const target = Array.from(nav.querySelectorAll("button")).find(b => b.textContent === initial) || nav.querySelector("button");
-        target.click();
+    const nav = document.getElementById("nav");
+    PAGE_CONFIG.forEach((page, idx) => {
+      const btn = document.createElement("button");
+      btn.textContent = `${page.name} (${page.tokenIdx.length})`;
+      const pageTokens = page.tokenIdx.map(i => TOKEN_LIST[i]).filter(Boolean);
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".nav button").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        renderPage(page.name, pageTokens);
+        location.hash = encodeURIComponent(page.name);
       });
+      if (idx === 0) btn.classList.add("active");
+      nav.appendChild(btn);
+    });
+
+    const initial = decodeURIComponent((location.hash || "").replace(/^#/, "")) || PAGE_CONFIG[0].name;
+    const target = Array.from(nav.querySelectorAll("button")).find(b => b.textContent.startsWith(initial)) || nav.querySelector("button");
+    target.click();
   </script>
 </body>
 </html>
